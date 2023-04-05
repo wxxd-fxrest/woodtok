@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:woodtok/constants/sizes.dart';
 import 'package:woodtok/features/authentication/sign_up_screen.dart';
 
 void main() {
@@ -13,7 +14,18 @@ class WoodTok extends StatelessWidget {
     return MaterialApp(
       title: 'Tik Tok Clone',
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: Sizes.size16 + Sizes.size2,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       home: const SignUpScreen(),
     );
