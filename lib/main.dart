@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:woodtok/constants/sizes.dart';
-import 'package:woodtok/features/authentication/sign_up_screen.dart';
+import 'package:woodtok/features/onboarding/interests_screen.dart';
 
 void main() {
   runApp(const WoodTok());
@@ -27,7 +27,7 @@ class WoodTok extends StatelessWidget {
           ),
         ),
       ),
-      home: const SignUpScreen(),
+      home: const InterestsScreen(),
     );
   }
 }
