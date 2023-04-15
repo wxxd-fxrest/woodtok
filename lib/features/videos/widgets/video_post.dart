@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:woodtok/constants/gaps.dart';
 import 'package:woodtok/constants/sizes.dart';
+import 'package:woodtok/features/videos/widgets/video_button.dart';
 
 class VideoPost extends StatefulWidget {
   final Function onVideoFinished;
@@ -21,8 +23,7 @@ class VideoPost extends StatefulWidget {
 
 class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
-  final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset("assets/videos/woodtok_video.mp4");
+  late final VideoPlayerController _videoPlayerController;
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
@@ -40,7 +41,10 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _initVideoPlayer() async {
+    _videoPlayerController =
+        VideoPlayerController.asset("assets/videos/woodtok_video.mp4");
     await _videoPlayerController.initialize();
+    await _videoPlayerController.setLooping(true);
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
@@ -124,6 +128,64 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
               ),
+            ),
+          ),
+          Positioned(
+            bottom: 30,
+            left: 30,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  "@Joono",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: Sizes.size20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Gaps.v10,
+                Text(
+                  "This is saraleeeee",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: Sizes.size16,
+                  ),
+                )
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            right: 10,
+            child: Column(
+              children: const [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  foregroundImage: NetworkImage(
+                    "https://avatars.githubusercontent.com/u/3612017",
+                  ),
+                  child: Text("니꼬"),
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidHeart,
+                  text: "2.9M",
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidComment,
+                  text: "33K",
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.share,
+                  text: "Share",
+                ),
+                Gaps.v96,
+              ],
             ),
           ),
         ],
