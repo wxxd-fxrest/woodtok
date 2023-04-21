@@ -16,6 +16,10 @@ class WoodTok extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFFE9435A),
+          selectionColor: Color(0xFFE9435A),
+        ),
         appBarTheme: const AppBarTheme(
           elevation: 0,
           foregroundColor: Colors.black,
@@ -27,7 +31,7 @@ class WoodTok extends StatelessWidget {
           ),
         ),
       ),
-      home: MainNavigationScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
