@@ -20,6 +20,7 @@ class WoodTok extends StatelessWidget {
           cursorColor: Color(0xFFE9435A),
           selectionColor: Color(0xFFE9435A),
         ),
+        splashColor: Colors.transparent,
         appBarTheme: const AppBarTheme(
           elevation: 0,
           foregroundColor: Colors.black,

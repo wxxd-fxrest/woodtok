@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:woodtok/constants/gaps.dart';
 import 'package:woodtok/constants/sizes.dart';
 import 'package:woodtok/features/discover/discover_screen.dart';
+import 'package:woodtok/features/inbox/inbox_screen.dart';
 import 'package:woodtok/features/main_navigation/widgets/nav_tab.dart';
 import 'package:woodtok/features/main_navigation/widgets/post_video_button.dart';
 import 'package:woodtok/features/videos/video_timeline_screen.dart';
@@ -53,7 +54,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 3,
-            child: Container(),
+            child: const InboxScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 4,
