@@ -9,7 +9,7 @@ class VideoTimeLineScreen extends StatefulWidget {
 }
 
 class _VideoTimeLineScreenState extends State<VideoTimeLineScreen> {
-  int _itemCount = 4;
+  int _itemCount = 3;
 
   final PageController _pageController = PageController();
 
