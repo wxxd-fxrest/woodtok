@@ -6,6 +6,7 @@ import 'package:woodtok/features/discover/discover_screen.dart';
 import 'package:woodtok/features/inbox/inbox_screen.dart';
 import 'package:woodtok/features/main_navigation/widgets/nav_tab.dart';
 import 'package:woodtok/features/main_navigation/widgets/post_video_button.dart';
+import 'package:woodtok/features/users/user_profile_screen.dart';
 import 'package:woodtok/features/videos/video_timeline_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 4;
 
   void _onTap(int index) {
     setState(() {
@@ -58,7 +59,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 4,
-            child: Container(),
+            child: const UserProfileScreen(),
           )
         ],
       ),
