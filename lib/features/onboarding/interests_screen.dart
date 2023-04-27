@@ -108,6 +108,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
           controller: _scrollController,
           child: Padding(
             padding: const EdgeInsets.only(
+              top: Sizes.size32,
               left: Sizes.size24,
               right: Sizes.size24,
               bottom: Sizes.size16,
@@ -143,20 +144,17 @@ class _InterestsScreenState extends State<InterestsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.only(
-            bottom: Sizes.size20,
-            top: Sizes.size16,
-            left: Sizes.size24,
-            right: Sizes.size24,
-          ),
-          child: CupertinoButton(
-            onPressed: _onNextTap,
-            color: Theme.of(context).primaryColor,
-            child: const Text("Next"),
-          ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(
+          bottom: Sizes.size40,
+          top: Sizes.size16,
+          left: Sizes.size24,
+          right: Sizes.size24,
+        ),
+        child: CupertinoButton(
+          onPressed: _onNextTap,
+          color: Theme.of(context).primaryColor,
+          child: const Text("Next"),
         ),
       ),
     );

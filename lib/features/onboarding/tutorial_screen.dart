@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:woodtok/constants/gaps.dart';
 import 'package:woodtok/constants/sizes.dart';
 import 'package:woodtok/features/main_navigation/main_navigation_screen.dart';
+import 'package:woodtok/utils.dart';
 
 enum Direction { right, left }
 
@@ -48,7 +49,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
   void _onEnterAppTap() {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
-        builder: (context) => MainNavigationScreen(),
+        builder: (context) => const MainNavigationScreen(),
       ),
       (route) => false,
     );
@@ -114,9 +115,15 @@ class _TutorialScreenState extends State<TutorialScreen> {
         bottomNavigationBar: AnimatedOpacity(
           duration: const Duration(milliseconds: 300),
           opacity: _showingPage == Page.first ? 0 : 1,
-          child: BottomAppBar(
+          child: Container(
+            color: isDarkMode(context) ? Colors.black : Colors.white,
             child: Padding(
-              padding: const EdgeInsets.all(Sizes.size24),
+              padding: const EdgeInsets.only(
+                bottom: Sizes.size40,
+                top: Sizes.size16,
+                left: Sizes.size24,
+                right: Sizes.size24,
+              ),
               child: CupertinoButton(
                 onPressed: _onEnterAppTap,
                 color: Theme.of(context).primaryColor,

@@ -18,10 +18,10 @@ class _VideoTimeLineScreenState extends State<VideoTimeLineScreen> {
 
   void _onVideoFinished() {
     return;
-    _pageController.nextPage(
-      duration: _scrollDuration,
-      curve: _scrollCurve,
-    );
+    // _pageController.nextPage(
+    //   duration: _scrollDuration,
+    //   curve: _scrollCurve,
+    // );
   }
 
   void _onPageChanged(int page) {
