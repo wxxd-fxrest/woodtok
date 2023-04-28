@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:woodtok/constants/sizes.dart';
-import 'package:woodtok/features/main_navigation/main_navigation_screen.dart';
+import 'package:woodtok/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,8 @@ class WoodTok extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'Tik Tok Clone',
       themeMode: ThemeMode.system,
@@ -91,7 +92,6 @@ class WoodTok extends StatelessWidget {
         ),
         primaryColor: const Color(0xFFE9435A),
       ),
-      home: const MainNavigationScreen(),
     );
   }
 }

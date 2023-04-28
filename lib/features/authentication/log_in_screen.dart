@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:woodtok/constants/gaps.dart';
 import 'package:woodtok/constants/sizes.dart';
+import 'package:go_router/go_router.dart';
 import 'package:woodtok/features/authentication/login_form_screen.dart';
 import 'package:woodtok/features/authentication/widgets/auth_button.dart';
 import 'package:woodtok/utils.dart';
 
 class LogInScreen extends StatelessWidget {
+  static String routeName = "login";
+  static String routeURL = "/login";
   const LogInScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   void _onEmailLoginTap(BuildContext context) {

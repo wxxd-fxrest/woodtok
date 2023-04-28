@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:woodtok/constants/gaps.dart';
 import 'package:woodtok/constants/sizes.dart';
 import 'package:woodtok/features/authentication/log_in_screen.dart';
@@ -8,22 +9,16 @@ import 'package:woodtok/features/authentication/widgets/auth_button.dart';
 import 'package:woodtok/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
+  static const routeURL = "/";
+  static const routeName = "signUp";
   const SignUpScreen({super.key});
 
-  void _onLoginTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LogInScreen(),
-      ),
-    );
+  void _onLoginTap(BuildContext context) async {
+    context.push(LogInScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const UsernameScreen(),
-      ),
-    );
+    context.pushNamed(UsernameScreen.routeName);
   }
 
   @override

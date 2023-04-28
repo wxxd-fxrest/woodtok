@@ -7,7 +7,13 @@ import 'package:woodtok/features/users/widgets/persistent_tab_bar.dart';
 import 'package:woodtok/features/users/widgets/user_profile_follow.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  final String username;
+  final String tab;
+  const UserProfileScreen({
+    super.key,
+    required this.username,
+    required this.tab,
+  });
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -28,12 +34,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       body: SafeArea(
         child: DefaultTabController(
+          initialIndex: widget.tab == "likes" ? 1 : 0,
           length: 2,
           child: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
                 SliverAppBar(
-                  title: const Text("주노"),
+                  title: Text(widget.username),
                   actions: [
                     IconButton(
                       onPressed: _onGearPressed,
@@ -47,19 +54,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 50,
-                        foregroundImage: NetworkImage(
+                        foregroundImage: const NetworkImage(
                             "https://i.pinimg.com/564x/07/aa/a9/07aaa98dd45f1c670e755a0bc0ee6ec0.jpg"),
-                        child: Text("주노"),
+                        child: Text(widget.username),
                       ),
                       Gaps.v20,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            "@주노",
-                            style: TextStyle(
+                          Text(
+                            "@${widget.username}",
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: Sizes.size18,
                             ),
