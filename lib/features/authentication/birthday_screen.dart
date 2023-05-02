@@ -4,6 +4,7 @@ import 'package:woodtok/constants/gaps.dart';
 import 'package:woodtok/constants/sizes.dart';
 import 'package:woodtok/features/authentication/widgets/form_button.dart';
 import 'package:woodtok/features/onboarding/interests_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class BirthDayScreen extends StatefulWidget {
   const BirthDayScreen({super.key});
@@ -32,11 +33,7 @@ class _BirthDayScreenState extends State<BirthDayScreen> {
   }
 
   void _onNextTap() {
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const InterestsScreen(),
-        ),
-        (route) => false);
+    context.goNamed(InterestsScreen.routeName);
   }
 
   void _setTextFieldDate(DateTime date) {

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:woodtok/constants/sizes.dart';
 import 'package:woodtok/features/inbox/activity_screen.dart';
 import 'package:woodtok/features/inbox/chats_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class InboxScreen extends StatefulWidget {
   const InboxScreen({super.key});
@@ -13,19 +14,11 @@ class InboxScreen extends StatefulWidget {
 
 class _InboxScreenState extends State<InboxScreen> {
   void _onDmPressed() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ChatsScreen(),
-      ),
-    );
+    context.pushNamed(ChatsScreen.routeName);
   }
 
   void _onActivityTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ActivityScreen(),
-      ),
-    );
+    context.pushNamed(ActivityScreen.routeName);
   }
 
   @override

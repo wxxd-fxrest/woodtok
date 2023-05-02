@@ -5,52 +5,51 @@ import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:woodtok/constants/gaps.dart';
 import 'package:woodtok/constants/sizes.dart';
-import 'package:woodtok/features/videos/widgets/video_button.dart';
-import 'package:woodtok/features/videos/widgets/video_comments.dart';
+import 'package:woodtok/features/videos/view_models/playback_config_vm.dart';
+import 'package:woodtok/features/videos/views/widgets/video_button.dart';
+import 'package:woodtok/features/videos/views/widgets/video_comments.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
-
   final int index;
-
   const VideoPost({
     super.key,
     required this.onVideoFinished,
     required this.index,
   });
-
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  VideoPostState createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
+class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
-  late final VideoPlayerController _videoPlayerController;
+  late final VideoPlayerController videoPlayerController;
 
-  final Duration _animationDuration = const Duration(milliseconds: 200);
+  final Duration animationDuration = const Duration(milliseconds: 200);
+  late final AnimationController animationController;
 
-  bool _isPaused = false;
-
-  late final AnimationController _animationController;
+  bool isPaused = false;
+  final bool isMuted = false;
 
   void _onVideoChange() {
-    if (_videoPlayerController.value.isInitialized) {
-      if (_videoPlayerController.value.duration ==
-          _videoPlayerController.value.position) {
+    if (videoPlayerController.value.isInitialized) {
+      if (videoPlayerController.value.duration ==
+          videoPlayerController.value.position) {
         widget.onVideoFinished();
       }
     }
   }
 
   void _initVideoPlayer() async {
-    _videoPlayerController =
+    videoPlayerController =
         VideoPlayerController.asset("assets/videos/woodtok_video.mp4");
-    await _videoPlayerController.initialize();
-    await _videoPlayerController.setLooping(true);
+    await videoPlayerController.initialize();
+    await videoPlayerController.setLooping(true);
     if (kIsWeb) {
-      _videoPlayerController.setVolume(0);
+      await videoPlayerController.setVolume(0);
     }
-    _videoPlayerController.addListener(_onVideoChange);
+    videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
 
@@ -58,49 +57,62 @@ class _VideoPostState extends State<VideoPost>
   void initState() {
     super.initState();
     _initVideoPlayer();
-
-    _animationController = AnimationController(
+    animationController = AnimationController(
       vsync: this,
       lowerBound: 1.0,
       upperBound: 1.5,
       value: 1.5,
-      duration: _animationDuration,
+      duration: animationDuration,
     );
   }
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    videoPlayerController.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
-  void _onVisivilityChanged(VisibilityInfo info) {
+  void _onPlaybackConfigChanged() {
+    if (!mounted) return;
+    final muted = ref.read(playbackConfigProvider).muted;
+    ref.read(playbackConfigProvider.notifier).setMuted(!muted);
+    if (muted) {
+      videoPlayerController.setVolume(0);
+    } else {
+      videoPlayerController.setVolume(1);
+    }
+  }
+
+  void _onVisibilityChanged(VisibilityInfo info) {
     if (!mounted) return;
     if (info.visibleFraction == 1 &&
-        !_isPaused &&
-        !_videoPlayerController.value.isPlaying) {
-      _videoPlayerController.play();
+        !isPaused &&
+        !videoPlayerController.value.isPlaying) {
+      if (ref.read(playbackConfigProvider).autoplay) {
+        videoPlayerController.play();
+      }
     }
-    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+    if (videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
       _onTogglePause();
     }
   }
 
   void _onTogglePause() {
-    if (_videoPlayerController.value.isPlaying) {
-      _videoPlayerController.pause();
-      _animationController.reverse();
+    if (videoPlayerController.value.isPlaying) {
+      videoPlayerController.pause();
+      animationController.reverse();
     } else {
-      _videoPlayerController.play();
-      _animationController.forward();
+      videoPlayerController.play();
+      animationController.forward();
     }
     setState(() {
-      _isPaused = !_isPaused;
+      isPaused = !isPaused;
     });
   }
 
   void _onCommentsTap(BuildContext context) async {
-    if (_videoPlayerController.value.isPlaying) {
+    if (videoPlayerController.value.isPlaying) {
       _onTogglePause();
     }
     await showModalBottomSheet(
@@ -116,12 +128,12 @@ class _VideoPostState extends State<VideoPost>
   Widget build(BuildContext context) {
     return VisibilityDetector(
       key: Key("${widget.index}"),
-      onVisibilityChanged: _onVisivilityChanged,
+      onVisibilityChanged: _onVisibilityChanged,
       child: Stack(
         children: [
-          Positioned(
-            child: _videoPlayerController.value.isInitialized
-                ? VideoPlayer(_videoPlayerController)
+          Positioned.fill(
+            child: videoPlayerController.value.isInitialized
+                ? VideoPlayer(videoPlayerController)
                 : Container(
                     color: Colors.black,
                   ),
@@ -135,19 +147,20 @@ class _VideoPostState extends State<VideoPost>
             child: IgnorePointer(
               child: Center(
                 child: AnimatedBuilder(
-                  animation: _animationController,
+                  animation: animationController,
                   builder: (context, child) {
                     return Transform.scale(
-                      scale: _animationController.value,
+                      scale: animationController.value,
                       child: child,
                     );
                   },
                   child: AnimatedOpacity(
-                    opacity: _isPaused ? 1 : 0,
-                    duration: _animationDuration,
+                    opacity: isPaused ? 1 : 0,
+                    duration: animationDuration,
                     child: const FaIcon(
                       FontAwesomeIcons.play,
-                      size: Sizes.size60,
+                      color: Colors.white,
+                      size: Sizes.size52,
                     ),
                   ),
                 ),
@@ -155,25 +168,38 @@ class _VideoPostState extends State<VideoPost>
             ),
           ),
           Positioned(
-            bottom: 30,
-            left: 30,
+            left: 20,
+            top: 40,
+            child: IconButton(
+              icon: FaIcon(
+                ref.watch(playbackConfigProvider).muted
+                    ? FontAwesomeIcons.volumeOff
+                    : FontAwesomeIcons.volumeHigh,
+                color: Colors.white,
+              ),
+              onPressed: _onPlaybackConfigChanged,
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            left: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
                 Text(
-                  "@Joono",
+                  "@니꼬",
                   style: TextStyle(
-                    color: Colors.black,
                     fontSize: Sizes.size20,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Gaps.v10,
                 Text(
-                  "This is saraleeeee",
+                  "This is my house in Thailand!!!",
                   style: TextStyle(
-                    color: Colors.black,
                     fontSize: Sizes.size16,
+                    color: Colors.white,
                   ),
                 )
               ],
@@ -210,8 +236,7 @@ class _VideoPostState extends State<VideoPost>
                 const VideoButton(
                   icon: FontAwesomeIcons.share,
                   text: "Share",
-                ),
-                Gaps.v96,
+                )
               ],
             ),
           ),

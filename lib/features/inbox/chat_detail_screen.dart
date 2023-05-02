@@ -4,7 +4,15 @@ import 'package:woodtok/constants/gaps.dart';
 import 'package:woodtok/constants/sizes.dart';
 
 class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({super.key});
+  static const String routeName = "chatDetail";
+  static const String routeURL = ":chatId";
+
+  final String chatId;
+
+  const ChatDetailScreen({
+    super.key,
+    required this.chatId,
+  });
 
   @override
   State<ChatDetailScreen> createState() => _ChatDetailScreenState();
@@ -57,9 +65,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               ),
             ],
           ),
-          title: const Text(
-            "사라",
-            style: TextStyle(
+          title: Text(
+            "사라(${widget.chatId}",
+            style: const TextStyle(
               fontWeight: FontWeight.w600,
             ),
           ),

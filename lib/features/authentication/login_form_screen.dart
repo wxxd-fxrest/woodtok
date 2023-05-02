@@ -3,6 +3,7 @@ import 'package:woodtok/constants/gaps.dart';
 import 'package:woodtok/constants/sizes.dart';
 import 'package:woodtok/features/authentication/widgets/form_button.dart';
 import 'package:woodtok/features/onboarding/interests_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginFormScreen extends StatefulWidget {
   const LoginFormScreen({super.key});
@@ -20,11 +21,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => const InterestsScreen(),
-            ),
-            (route) => false);
+        context.goNamed(InterestsScreen.routeName);
       }
     }
   }

@@ -4,39 +4,49 @@ import 'package:woodtok/constants/gaps.dart';
 import 'package:woodtok/constants/sizes.dart';
 import 'package:woodtok/features/discover/discover_screen.dart';
 import 'package:woodtok/features/inbox/inbox_screen.dart';
-import 'package:woodtok/features/main_navigation/widgets/nav_tab.dart';
-import 'package:woodtok/features/main_navigation/widgets/post_video_button.dart';
+import 'package:woodtok/common/widgets/main_navigation/widgets/nav_tab.dart';
+import 'package:woodtok/common/widgets/main_navigation/widgets/post_video_button.dart';
 import 'package:woodtok/features/users/user_profile_screen.dart';
-import 'package:woodtok/features/videos/video_timeline_screen.dart';
+import 'package:woodtok/features/videos/views/video_recording_screen.dart';
+import 'package:woodtok/features/videos/views/video_timeline_screen.dart';
 import 'package:woodtok/utils.dart';
+import 'package:go_router/go_router.dart';
 
 class MainNavigationScreen extends StatefulWidget {
-  const MainNavigationScreen({super.key});
+  static const String routeName = "mainNavigation";
+
+  final String tab;
+
+  const MainNavigationScreen({
+    super.key,
+    required this.tab,
+  });
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 1;
+  final List<String> _tabs = [
+    "home",
+    "discover",
+    "xxxx",
+    "inbox",
+    "profile",
+  ];
+
+  late int _selectedIndex = _tabs.indexOf(widget.tab);
 
   void _onTap(int index) {
+    context.go("/${_tabs[index]}");
+
     setState(() {
       _selectedIndex = index;
     });
   }
 
   void _onPostVideoButtonTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: const Text("Record video"),
-          ),
-        ),
-        fullscreenDialog: true,
-      ),
-    );
+    context.pushNamed(VideoRecordingScreen.routeName);
   }
 
   @override
