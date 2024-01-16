@@ -11,10 +11,7 @@ class WoodTokApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'WoodTok',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: ThemeData(primaryColor: const Color(0xFFE9435A)),
       home: Container(),
     );
   }
