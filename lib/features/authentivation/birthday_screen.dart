@@ -34,11 +34,9 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   // 앱 충돌을 예방하기 위해 _birthdayController 제거
 
   void _onPasswordTap(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const InterestsScreen(),
-      ),
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => const InterestsScreen()),
+      (route) => false,
     );
   }
 
