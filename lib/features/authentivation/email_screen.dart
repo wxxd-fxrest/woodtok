@@ -117,7 +117,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 onTap: () => _onPasswordTap(context),
                 child: FormButton(
                   disabled: _useremail.isEmpty || _isEmailValid() != null,
-                  type: 'Sign up',
+                  type: 'Next',
                 ),
               )
             ],

@@ -38,7 +38,7 @@ class LogInScreen extends StatelessWidget {
               ),
               Gaps.v40,
               AuthButton(
-                authPage: 'email',
+                authPage: 'login',
                 text: 'Use email & password',
                 icon: FaIcon(
                   FontAwesomeIcons.user,
@@ -46,7 +46,7 @@ class LogInScreen extends StatelessWidget {
               ),
               Gaps.v16,
               AuthButton(
-                authPage: 'email',
+                authPage: 'login',
                 text: 'Continue with Apple',
                 icon: FaIcon(
                   FontAwesomeIcons.apple,

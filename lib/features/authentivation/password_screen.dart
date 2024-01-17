@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:woodtok/constants/gaps.dart';
 import 'package:woodtok/constants/sizes.dart';
+import 'package:woodtok/features/authentivation/birthday_screen.dart';
 import 'package:woodtok/features/authentivation/widgets/form_button.dart';
 
 class PasswordScreen extends StatefulWidget {
@@ -40,7 +41,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
   }
 
   bool _isPasswordValid() {
-    return _password.isNotEmpty && _password.length > 8;
+    return _password.isNotEmpty &&
+        _password.length > 8 &&
+        _password.length < 20;
   }
 
   void _onScaffoldTap() {
@@ -57,7 +60,15 @@ class _PasswordScreenState extends State<PasswordScreen> {
     setState(() {});
   }
 
-// 4.7 password screen 12분 ~
+  void _onBirthDayTap(BuildContext context) {
+    if (!_isPasswordValid()) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const BirthdayScreen(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,51 +98,77 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 controller: _passwordController,
                 obscureText: _passwordEye,
                 decoration: InputDecoration(
-                    hintText: 'Password',
-                    hintStyle: TextStyle(
-                      color: Colors.grey.shade500,
+                  hintText: 'Password',
+                  hintStyle: TextStyle(
+                    color: Colors.grey.shade500,
+                  ),
+                  // errorText: ,
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade400,
                     ),
-                    // errorText: ,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
-                      ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade400,
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
-                      ),
-                    ),
-                    suffix: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        GestureDetector(
-                          onTap: _onClearPassword,
-                          child: FaIcon(
-                            FontAwesomeIcons.solidCircleXmark,
-                            color: Colors.grey.shade500,
-                            size: Sizes.size20 + Sizes.size2,
-                          ),
+                  ),
+                  suffix: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        onTap: _onClearPassword,
+                        child: FaIcon(
+                          FontAwesomeIcons.solidCircleXmark,
+                          color: Colors.grey.shade500,
+                          size: Sizes.size20 + Sizes.size2,
                         ),
-                        Gaps.h10,
-                        GestureDetector(
-                          onTap: _onToggleEye,
-                          child: FaIcon(
-                            _passwordEye
-                                ? FontAwesomeIcons.eye
-                                : FontAwesomeIcons.eyeSlash,
-                            color: Colors.grey.shade500,
-                            size: Sizes.size20 + Sizes.size2,
-                          ),
+                      ),
+                      Gaps.h10,
+                      GestureDetector(
+                        onTap: _onToggleEye,
+                        child: FaIcon(
+                          _passwordEye
+                              ? FontAwesomeIcons.eye
+                              : FontAwesomeIcons.eyeSlash,
+                          color: Colors.grey.shade500,
+                          size: Sizes.size20 + Sizes.size2,
                         ),
-                      ],
-                    )),
+                      ),
+                    ],
+                  ),
+                ),
                 cursorColor: Theme.of(context).primaryColor,
               ),
-              Gaps.v32,
-              FormButton(
-                disabled: _isPasswordValid(),
-                type: 'Sign up',
+              Gaps.v10,
+              const Text(
+                'Your password must have:',
+                style: TextStyle(
+                  fontSize: Sizes.size12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Gaps.v10,
+              Row(
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.circleCheck,
+                    size: Sizes.size20,
+                    color: _isPasswordValid()
+                        ? Colors.green
+                        : Colors.grey.shade400,
+                  ),
+                  Gaps.h12,
+                  const Text('8 to 20 characters'),
+                ],
+              ),
+              Gaps.v10,
+              GestureDetector(
+                onTap: () => _onBirthDayTap(context),
+                child: FormButton(
+                  disabled: !_isPasswordValid(),
+                  type: 'Next',
+                ),
               )
             ],
           ),

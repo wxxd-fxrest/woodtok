@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:woodtok/constants/sizes.dart';
+import 'package:woodtok/features/authentivation/login_form_screen.dart';
 import 'package:woodtok/features/authentivation/username_screen.dart';
 
 class AuthButton extends StatelessWidget {
@@ -17,10 +18,16 @@ class AuthButton extends StatelessWidget {
 
   void _onGoTap(BuildContext context) {
     switch (authPage) {
-      case 'email':
+      case 'signup':
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => const UserNameScreen(),
+          ),
+        );
+      case 'login':
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const LoginFormScreen(),
           ),
         );
     }

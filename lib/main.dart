@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:woodtok/constants/sizes.dart';
 import 'package:woodtok/features/authentivation/sign_up_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(const WoodTokApp());
@@ -13,6 +14,15 @@ class WoodTokApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'WoodTok',
+      // Cupertino Datepicker 의 언어를 한국어로 변경하려면 아래 코드를 추가
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''), // English, no country code
+        Locale('ko', ''), // Korean, no country code
+      ],
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
