@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:woodtok/constants/sizes.dart';
 import 'package:woodtok/features/authentivation/sign_up_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:woodtok/features/tab_navigation/main_navigation_screen.dart';
 
 void main() {
   runApp(const WoodTokApp());
@@ -37,7 +38,7 @@ class WoodTokApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const SignUpScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
